@@ -4,7 +4,7 @@ import { RequestValidationError } from "../errors/request-validation.error";
 import { ENDPOINT } from "../constants/endpoint.constant";
 import { User } from "../models/user.model";
 import { BadRequestError } from "../errors/BadRequest.error";
-
+import jwt from "jsonwebtoken";
 const router = express.Router();
 
 const validate = [
@@ -27,6 +27,18 @@ const handler = async (req: Request, res: Response) => {
   }
   const user = User.build({ email, password });
   await user.save();
+
+  const userJwt = jwt.sign(
+    {
+      id: user.id,
+      email: user.email,
+    },
+    process.env.JWT_KEY!
+  );
+  req.session = {
+    jwt: userJwt,
+  };
+
   res.status(201).send(user);
 };
 

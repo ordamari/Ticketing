@@ -16,6 +16,20 @@ spec:
         - name: auth
           image: docker.io/ordamari/auth
           imagePullPolicy: Never
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+
 ---
 apiVersion: v1
 kind: Service
