@@ -1,0 +1,8 @@
+{
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#322D1B",
+    "titleBar.activeBackground": "#464025",
+    "titleBar.activeForeground": "#FBFBF8"
+  },
+  "cSpell.words": ["middlewares", "ordamari", "signout"]
+}

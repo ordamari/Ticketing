@@ -1,0 +1,8 @@
+{
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#0B350F",
+    "titleBar.activeBackground": "#0F4B15",
+    "titleBar.activeForeground": "#F4FDF5"
+  },
+  "cSpell.words": ["signin", "signout"]
+}
