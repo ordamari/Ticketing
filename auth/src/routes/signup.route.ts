@@ -1,10 +1,12 @@
 import express, { Request, Response } from "express";
-import { body, validationResult } from "express-validator";
-import { RequestValidationError } from "../errors/request-validation.error";
-import { ENDPOINT } from "../constants/endpoint.constant";
-import { User } from "../models/user.model";
-import { BadRequestError } from "../errors/BadRequest.error";
+import { body } from "express-validator";
 import jwt from "jsonwebtoken";
+
+import { validateRequest } from "../middlewares/validate-request.middleware";
+import { User } from "../models/user.model";
+import { ENDPOINT } from "../constants/endpoint.constant";
+import { BadRequestError } from "../errors/BadRequest.error";
+
 const router = express.Router();
 
 const validate = [
@@ -16,10 +18,6 @@ const validate = [
 ];
 
 const handler = async (req: Request, res: Response) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    throw new RequestValidationError(errors.array());
-  }
   const { email, password } = req.body;
   const existingUser = await User.findOne({ email });
   if (existingUser) {
@@ -42,6 +40,6 @@ const handler = async (req: Request, res: Response) => {
   res.status(201).send(user);
 };
 
-router.post(`${ENDPOINT}/signup`, validate, handler);
+router.post(`${ENDPOINT}/signup`, validate, validateRequest, handler);
 
 export { router as signupRouter };
