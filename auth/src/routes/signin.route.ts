@@ -1,11 +1,12 @@
 import express, { Request, Response } from "express";
-import { ENDPOINT } from "../constants/endpoint.constant";
 import { body } from "express-validator";
+import jwt from "jsonwebtoken";
+
+import { ENDPOINT } from "../constants/endpoint.constant";
 import { validateRequest } from "../middlewares/validate-request.middleware";
 import { Password } from "../services/password.service";
 import { User } from "../models/user.model";
 import { BadRequestError } from "../errors/BadRequest.error";
-import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
@@ -21,7 +22,6 @@ const handler = async (req: Request, res: Response) => {
     throw new BadRequestError("Invalid credentials");
   }
   const passwordMatch = await Password.compare(existingUser.password, password);
-  console.log({ existingUser, passwordMatch });
   if (!passwordMatch) {
     throw new BadRequestError("Invalid credentials");
   }

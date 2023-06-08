@@ -36,7 +36,6 @@ const handler = async (req: Request, res: Response) => {
   req.session = {
     jwt: userJwt,
   };
-
   res.status(201).send(user);
 };
 
