@@ -1,0 +1,45 @@
+a.button,
+button.button,
+div.button {
+    font-size: var(--large-font-size);
+    font-weight: var(--bold);
+    display: block;
+    padding-block: var(--small-font-size);
+    padding-inline: var(--medium-font-size);
+    border: none;
+    border-radius: var(--large-border-radius);
+    text-decoration: none;
+    white-space: nowrap;
+
+
+    &.icon {
+        display: flex;
+        gap: var(--medium-gap);
+        align-items: center;
+
+        svg {
+            width: var(--large-font-size);
+            height: var(--large-font-size);
+        }
+    }
+
+    &.small {
+        font-size: var(--small-font-size);
+        border-radius: var(--medium-border-radius);
+
+        &.icon svg {
+            width: var(--small-font-size);
+            height: var(--small-font-size);
+        }
+    }
+
+    &.black-opacity {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+    }
+
+    &:disabled {
+        opacity: .5;
+        pointer-events: none;
+    }
+}

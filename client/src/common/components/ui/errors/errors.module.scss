@@ -1,0 +1,23 @@
+.errors {
+    display: flex;
+    flex-direction: column;
+    gap: var(--medium-gap);
+    background-color: var(--color-angry);
+    padding: var(--medium-gap);
+    border-radius: var(--large-border-radius);
+
+
+    p {
+        font-size: var(--medium-font-size);
+        color: var(--white);
+
+    }
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        gap: var(--small-gap);
+        font-size: var(--small-font-size);
+        color: var(--white);
+    }
+}

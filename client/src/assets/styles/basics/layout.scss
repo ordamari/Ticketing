@@ -1,0 +1,12 @@
+.app {
+    height: 100%;
+    --primary-color: var(--teal-2);
+    --primary-color-opacity: var(--teal-2-opacity);
+    --background-color: var(--near-white);
+    --text-color: var(--black);
+    --near-background-color: var(--white);
+    --light-color: var(--light-gray);
+    background-color: var(--near-background-color);
+    color: var(--text-color);
+
+}

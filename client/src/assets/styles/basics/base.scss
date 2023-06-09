@@ -38,3 +38,8 @@ a {
 ul {
     list-style: none;
 }
+
+.bg-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}

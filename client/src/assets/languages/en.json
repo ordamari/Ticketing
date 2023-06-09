@@ -1,0 +1,12 @@
+{
+  "global": {
+    "error": "Error"
+  },
+  "auth": {
+    "emailPlaceholder": "Email Address",
+    "passwordPlaceholder": "Password",
+    "submit": "Submit",
+    "signin": "Sign In",
+    "signup": "Sign Up"
+  }
+}

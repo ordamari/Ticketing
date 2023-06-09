@@ -1,0 +1,33 @@
+.input-container {
+    font-size: var(--large-font-size);
+    position: relative;
+    background-color: var(--background-color);
+    border-radius: var(--small-font-size);
+    padding-inline: var(--small-gap);
+
+
+    label {
+        position: absolute;
+        left: var(--small-gap);
+        transition: all 0.3s ease;
+        pointer-events: none;
+        top: 50%;
+        transform: translateY(-50%);
+
+        &.hide {
+            font-size: var(--small-font-size);
+            top: 0;
+            transform: translateY(0);
+        }
+    }
+
+    input {
+        padding-block: var(--small-font-size);
+        font-size: var(--large-font-size);
+        background-color: transparent;
+        border: none;
+        width: 100%;
+    }
+
+
+}
