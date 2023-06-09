@@ -1,0 +1,40 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    font-family: 'assistant', 'Noto Color Emoji', sans-serif;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+
+button,
+a {
+    cursor: pointer;
+}
+
+#__next,
+.App {
+    height: 100%;
+}
+
+ul {
+    list-style: none;
+}
