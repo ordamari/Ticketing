@@ -8,11 +8,9 @@ const SIGNUP_ENDPOINT = "users/signup";
 function Signup() {
   const t = useTranslation();
   const router = useRouter();
-  const [signUp, errors] = useRequest(
-    SIGNUP_ENDPOINT,
-    Methods.POST,
-    router.push.bind(router, "/")
-  );
+  const [signUp, errors] = useRequest(SIGNUP_ENDPOINT, Methods.POST, () => {
+    router.push("/");
+  });
 
   return (
     <div className="flex column gap-large">
