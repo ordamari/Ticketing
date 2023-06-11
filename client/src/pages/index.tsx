@@ -1,13 +1,18 @@
 import { User } from "../common/types/user.type";
 import buildClient from "../api/build-client";
+import useTranslation from "../common/hooks/useTranslation";
 
 type PrivateProps = {
   currentUser: User | null;
 };
 function Home({ currentUser }: PrivateProps) {
-  console.log(currentUser);
+  const t = useTranslation();
 
-  return <div>Welcome to Next.js!</div>;
+  return (
+    <div>
+      <h1>{currentUser ? t("global.welcome") : t("global.notSignedIn")}</h1>
+    </div>
+  );
 }
 
 Home.getInitialProps = async (context) => {

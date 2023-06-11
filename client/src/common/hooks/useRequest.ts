@@ -14,7 +14,7 @@ export function useRequest(
   const [errors, setErrors] = useState<Error[] | null>(null);
   const url = `${BASE_URL}${endpoint}`;
 
-  const doRequest = async (body: any) => {
+  const doRequest = async (body?: any) => {
     try {
       setErrors(null);
       const response = await axios[method](url, body);
