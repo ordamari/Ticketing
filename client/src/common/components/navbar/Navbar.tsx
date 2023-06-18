@@ -21,7 +21,7 @@ function Navbar({ currentUser }: PrivateProps) {
   return (
     <nav className="navbar flex justify-space-between bg-primary navbar">
       <Link className="logo" href="/">
-        GiTix
+        GitTix
       </Link>
 
       <ul className="flex gap-small">

@@ -7,9 +7,8 @@ import { currentUserRouter } from "./routes/current-user.route";
 import { signinRouter } from "./routes/signin.route";
 import { signupRouter } from "./routes/signup.route";
 import { signoutRouter } from "./routes/signout.route";
+import { NotFoundError, errorHandler } from "@ordamaritickets/common";
 
-import { errorHandler } from "./middlewares/error-handler.middleware";
-import { NotFoundError } from "./errors/not-found.error";
 
 const app = express();
 app.set("trust proxy", true);

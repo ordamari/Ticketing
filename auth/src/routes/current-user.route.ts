@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 
 import { ENDPOINT } from "../constants/endpoint.constant";
-import { currentUser } from "../middlewares/current-user.middleware";
+import { currentUser } from "@ordamaritickets/common";
 
 const router = express.Router();
 
