@@ -1,26 +1,30 @@
-import express from "express";
-import { json } from "body-parser";
-import "express-async-errors";
-import cookieSession from "cookie-session";
-import { NotFoundError } from "@ordamaritickets/common";
-import { errorHandler } from "@ordamaritickets/common";
+import express from 'express'
+import { json } from 'body-parser'
+import 'express-async-errors'
+import cookieSession from 'cookie-session'
+import {
+    NotFoundError,
+    errorHandler,
+    currentUser,
+} from '@ordamaritickets/common'
+import { createTicketRouter } from './routes/new.route'
 
-
-
-const app = express();
-app.set("trust proxy", true);
-app.use(json());
+const app = express()
+app.set('trust proxy', true)
+app.use(json())
 app.use(
-  cookieSession({
-    signed: false,
-    secure: process.env.NODE_ENV !== "test",
-  })
-);
+    cookieSession({
+        signed: false,
+        secure: process.env.NODE_ENV !== 'test',
+    })
+)
+app.use(currentUser)
 
+app.use(createTicketRouter)
 
-app.all("*", () => {
-  throw new NotFoundError();
-});
-app.use(errorHandler);
+app.all('*', () => {
+    throw new NotFoundError()
+})
+app.use(errorHandler)
 
-export { app };
+export { app }
