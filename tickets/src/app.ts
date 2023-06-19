@@ -8,6 +8,8 @@ import {
     currentUser,
 } from '@ordamaritickets/common'
 import { createTicketRouter } from './routes/new.route'
+import { showTicketRouter } from './routes/show.route'
+import { indexTicketRouter } from './routes/index.route'
 
 const app = express()
 app.set('trust proxy', true)
@@ -21,6 +23,8 @@ app.use(
 app.use(currentUser)
 
 app.use(createTicketRouter)
+app.use(showTicketRouter)
+app.use(indexTicketRouter)
 
 app.all('*', () => {
     throw new NotFoundError()
