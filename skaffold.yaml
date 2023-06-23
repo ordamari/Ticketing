@@ -1,41 +1,49 @@
 apiVersion: skaffold/v3
 kind: Config
 build:
-  artifacts:
-    - image: docker.io/ordamari/auth
-      context: auth
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "src/**/*.ts"
-            dest: .
-    - image: docker.io/ordamari/client
-      context: client
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "src/**/*.ts"
-            dest: .
-          - src: "src/**/*.tsx"
-            dest: .
-          - src: "**/*.js"
-            dest: .
-          - src: "src/**/*.scss"
-            dest: .
-    - image: docker.io/ordamari/tickets
-      context: tickets
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "src/**/*.ts"
-            dest: .
-  local:
-    push: false
+    artifacts:
+        - image: docker.io/ordamari/auth
+          context: auth
+          docker:
+              dockerfile: Dockerfile
+          sync:
+              manual:
+                  - src: 'src/**/*.ts'
+                    dest: .
+        - image: docker.io/ordamari/client
+          context: client
+          docker:
+              dockerfile: Dockerfile
+          sync:
+              manual:
+                  - src: 'src/**/*.ts'
+                    dest: .
+                  - src: 'src/**/*.tsx'
+                    dest: .
+                  - src: '**/*.js'
+                    dest: .
+                  - src: 'src/**/*.scss'
+                    dest: .
+        - image: docker.io/ordamari/tickets
+          context: tickets
+          docker:
+              dockerfile: Dockerfile
+          sync:
+              manual:
+                  - src: 'src/**/*.ts'
+                    dest: .
+        - image: docker.io/ordamari/orders
+          context: orders
+          docker:
+              dockerfile: Dockerfile
+          sync:
+              manual:
+                  - src: 'src/**/*.ts'
+                    dest: .
+    local:
+        push: false
 manifests:
-  rawYaml:
-    - ./infra/k8s/*
+    rawYaml:
+        - ./infra/k8s/*
 deploy:
-  kubectl: {}
+    kubectl: {}
