@@ -2,6 +2,7 @@ import request from 'supertest'
 import { app } from '../../app'
 import { ENDPOINT } from '../../constants/endpoint.constant'
 import { Ticket } from '../../models/ticket.model'
+import { natsWrapper } from '../../nats-wrapper'
 
 const validTitle = 'Title'
 const validPrice = 10
@@ -86,4 +87,16 @@ it('create a ticket with valid parameters', async () => {
     expect(tickets.length).toEqual(1)
     expect(tickets[0].title).toEqual(validTitle)
     expect(tickets[0].price).toEqual(validPrice)
+})
+
+it('publishes an event', async () => {
+    await request(app)
+        .post(ENDPOINT)
+        .set('Cookie', await global.signin())
+        .send({
+            title: validTitle,
+            price: validPrice,
+        })
+        .expect(201)
+    expect(natsWrapper.client.publish).toHaveBeenCalled()
 })
