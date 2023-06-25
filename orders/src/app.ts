@@ -7,6 +7,10 @@ import {
     errorHandler,
     currentUser,
 } from '@ordamaritickets/common'
+import { deleteOrderRouter } from './routes/delete'
+import { newOrderRouter } from './routes/new'
+import { indexOrderRouter } from './routes'
+import { showOrderRouter } from './routes/show'
 
 const app = express()
 app.set('trust proxy', true)
@@ -18,6 +22,11 @@ app.use(
     })
 )
 app.use(currentUser)
+
+app.use(deleteOrderRouter)
+app.use(newOrderRouter)
+app.use(indexOrderRouter)
+app.use(showOrderRouter)
 
 app.all('*', () => {
     throw new NotFoundError()
