@@ -3,7 +3,6 @@ import { OrderStatus } from '@ordamaritickets/common'
 import { TicketDoc } from './ticket.model'
 
 export { OrderStatus }
-
 interface OrderAttrs {
     userId: string
     status: OrderStatus

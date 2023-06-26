@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express'
-import { ENDPOINT } from '../../constants/endpoint.constant'
+import { ENDPOINT } from '../constants/endpoint.constant'
 import {
     requireAuth,
     validateRequest,
@@ -9,7 +9,8 @@ import {
 import mongoose from 'mongoose'
 import { body } from 'express-validator'
 import { Ticket } from '../models/ticket.model'
-import { Order } from '../models/order.model'
+import { Order, OrderStatus } from '../models/order.model'
+import { EXPIRATION_WINDOW_SECONDS } from '../constants/expiration-window-seconds.constant'
 
 const router = express.Router()
 
@@ -27,6 +28,16 @@ const handler = async (req: Request, res: Response) => {
     if (!ticket) throw new NotFoundError()
     const isReserved = await ticket.isReserved()
     if (isReserved) throw new BadRequestError('Ticket is already reserved')
+    const expiration = new Date()
+    expiration.setSeconds(expiration.getSeconds() + EXPIRATION_WINDOW_SECONDS)
+    const order = Order.build({
+        userId: req.currentUser!.id,
+        status: OrderStatus.Created,
+        expiresAt: expiration,
+        ticket,
+    })
+    await order.save()
+    res.status(201).send(order)
 }
 
 router.post(ENDPOINT, requireAuth, validateRequest, validators, handler)
