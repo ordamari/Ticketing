@@ -3,6 +3,7 @@ import { app } from '../../app'
 import { ENDPOINT } from '../../constants/endpoint.constant'
 import { Ticket } from '../../models/ticket.model'
 import { OrderStatus } from '@ordamaritickets/common'
+import { natsWrapper } from '../../nats-wrapper'
 
 const validTitle = 'validTitle'
 const validPrice = 20
@@ -59,4 +60,31 @@ it('marks an order as cancelled', async () => {
     expect(cancelledOrder.body.status).toEqual(OrderStatus.Cancelled)
 })
 
-it.todo('emits an order cancelled event')
+it('emits an order cancelled event', async () => {
+    const ticket = Ticket.build({
+        title: validTitle,
+        price: validPrice,
+    })
+    await ticket.save()
+    const user = await global.signin()
+
+    const { body: order } = await request(app)
+        .post(ENDPOINT)
+        .set('Cookie', user)
+        .send({
+            ticketId: ticket.id,
+        })
+        .expect(201)
+
+    await request(app)
+        .delete(`${ENDPOINT}/${order.id}`)
+        .set('Cookie', user)
+        .expect(204)
+
+    await request(app)
+        .get(`${ENDPOINT}/${order.id}`)
+        .set('Cookie', user)
+        .expect(200)
+
+    expect(natsWrapper.client.publish).toHaveBeenCalled()
+})

@@ -11,6 +11,8 @@ import { body } from 'express-validator'
 import { Ticket } from '../models/ticket.model'
 import { Order, OrderStatus } from '../models/order.model'
 import { EXPIRATION_WINDOW_SECONDS } from '../constants/expiration-window-seconds.constant'
+import { natsWrapper } from '../nats-wrapper'
+import { OrderCreatedPublisher } from '../events/publishers/order-created.publisher'
 
 const router = express.Router()
 
@@ -35,6 +37,16 @@ const handler = async (req: Request, res: Response) => {
         status: OrderStatus.Created,
         expiresAt: expiration,
         ticket,
+    })
+    new OrderCreatedPublisher(natsWrapper.client).publish({
+        id: order.id,
+        status: order.status,
+        userId: order.userId,
+        expiresAt: order.expiresAt.toISOString(),
+        ticket: {
+            id: ticket.id,
+            price: ticket.price,
+        },
     })
     await order.save()
     res.status(201).send(order)

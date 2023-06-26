@@ -4,6 +4,7 @@ import { ENDPOINT } from '../../constants/endpoint.constant'
 import mongoose from 'mongoose'
 import { Ticket } from '../../models/ticket.model'
 import { Order, OrderStatus } from '../../models/order.model'
+import { natsWrapper } from '../../nats-wrapper'
 
 const validId = new mongoose.Types.ObjectId().toHexString()
 
@@ -55,4 +56,15 @@ it('reserves a ticket', async () => {
         .expect(201)
 })
 
-it.todo('emits an order created event')
+it('emits an order created event', async () => {
+    const ticket = await createTicket()
+    await request(app)
+        .post(ENDPOINT)
+        .set('Cookie', await global.signin())
+        .send({
+            ticketId: ticket.id,
+        })
+        .expect(201)
+
+    expect(natsWrapper.client.publish).toHaveBeenCalled()
+})
