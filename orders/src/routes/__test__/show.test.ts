@@ -2,14 +2,17 @@ import request from 'supertest'
 import { app } from '../../app'
 import { ENDPOINT } from '../../constants/endpoint.constant'
 import { Ticket } from '../../models/ticket.model'
+import mongoose from 'mongoose'
 
 const validTitle = 'validTitle'
 const validPrice = 20
+const validId = new mongoose.Types.ObjectId().toHexString()
 
 it('return an error if one user tries to fetch another users orders', async () => {
     const ticket = Ticket.build({
         title: validTitle,
         price: validPrice,
+        id: validId,
     })
     await ticket.save()
     const user = await global.signin()
@@ -33,6 +36,7 @@ it('fetches the order', async () => {
     const ticket = Ticket.build({
         title: validTitle,
         price: validPrice,
+        id: validId,
     })
     await ticket.save()
     const user = await global.signin()

@@ -4,14 +4,17 @@ import { ENDPOINT } from '../../constants/endpoint.constant'
 import { Ticket } from '../../models/ticket.model'
 import { OrderStatus } from '@ordamaritickets/common'
 import { natsWrapper } from '../../nats-wrapper'
+import mongoose from 'mongoose'
 
 const validTitle = 'validTitle'
 const validPrice = 20
+const validId = new mongoose.Types.ObjectId().toHexString()
 
 it('return an error if one user tries to fetch another users orders', async () => {
     const ticket = Ticket.build({
         title: validTitle,
         price: validPrice,
+        id: validId,
     })
     await ticket.save()
     const user = await global.signin()
@@ -35,6 +38,7 @@ it('marks an order as cancelled', async () => {
     const ticket = Ticket.build({
         title: validTitle,
         price: validPrice,
+        id: validId,
     })
     await ticket.save()
     const user = await global.signin()
@@ -64,6 +68,7 @@ it('emits an order cancelled event', async () => {
     const ticket = Ticket.build({
         title: validTitle,
         price: validPrice,
+        id: validId,
     })
     await ticket.save()
     const user = await global.signin()

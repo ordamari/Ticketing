@@ -12,6 +12,7 @@ const createTicket = async () => {
     const ticket = Ticket.build({
         title: 'validTitle',
         price: 20,
+        id: validId,
     })
     await ticket.save()
     return ticket
