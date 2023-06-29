@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express'
 import { ENDPOINT } from '../constants/endpoint.constant'
 import { body } from 'express-validator'
 import {
+    BadRequestError,
     NotAuthorizedError,
     NotFoundError,
     requireAuth,
@@ -22,12 +23,12 @@ const validation = [
 
 const handler = async (req: Request, res: Response) => {
     const ticket = await Ticket.findById(req.params.id)
-    if (!ticket) {
-        throw new NotFoundError()
-    }
-    if (ticket.userId !== req.currentUser!.id) {
-        throw new NotAuthorizedError()
-    }
+
+    if (!ticket) throw new NotFoundError()
+    if (ticket.orderId)
+        throw new BadRequestError('Cannot edit a reserved ticket')
+    if (ticket.userId !== req.currentUser!.id) throw new NotAuthorizedError()
+
     const { title, price } = req.body
     ticket.set({
         title,
@@ -39,6 +40,7 @@ const handler = async (req: Request, res: Response) => {
         title: ticket.title,
         price: ticket.price,
         userId: ticket.userId,
+        version: ticket.version,
     })
     res.send(ticket)
 }

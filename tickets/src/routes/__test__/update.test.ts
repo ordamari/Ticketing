@@ -3,6 +3,7 @@ import { app } from '../../app'
 import { ENDPOINT } from '../../constants/endpoint.constant'
 import mongoose from 'mongoose'
 import { natsWrapper } from '../../nats-wrapper'
+import { Ticket } from '../../models/ticket.model'
 
 const validId = new mongoose.Types.ObjectId().toHexString()
 const validTitle = 'Title'
@@ -134,4 +135,33 @@ it('publishes an event', async () => {
         .expect(200)
 
     expect(natsWrapper.client.publish).toHaveBeenCalled()
+})
+
+it('rejects updates if the ticket is reserved', async () => {
+    const newTitle = 'new title'
+    const newPrice = 20
+
+    const cookie = await global.signin()
+    const response = await request(app)
+        .post(ENDPOINT)
+        .set('Cookie', cookie)
+        .send({
+            title: validTitle,
+            price: validPrice,
+        })
+        .expect(201)
+
+    const ticket = await Ticket.findById(response.body.id)
+    const orderId = new mongoose.Types.ObjectId().toHexString()
+    ticket!.set({ orderId })
+    await ticket!.save()
+
+    await request(app)
+        .put(`${ENDPOINT}/${response.body.id}`)
+        .set('Cookie', cookie)
+        .send({
+            title: newTitle,
+            price: newPrice,
+        })
+        .expect(400)
 })
