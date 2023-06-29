@@ -40,6 +40,14 @@ build:
               manual:
                   - src: 'src/**/*.ts'
                     dest: .
+        - image: docker.io/ordamari/expiration
+          context: expiration
+          docker:
+              dockerfile: Dockerfile
+          sync:
+              manual:
+                  - src: 'src/**/*.ts'
+                    dest: .
     local:
         push: false
 manifests:
