@@ -42,6 +42,8 @@ build:
                     dest: .
         - image: docker.io/ordamari/expiration
           context: expiration
+        - image: docker.io/ordamari/payments
+          context: payments
           docker:
               dockerfile: Dockerfile
           sync:
