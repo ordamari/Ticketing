@@ -5,7 +5,9 @@ import { Ticket } from '../models/ticket.model'
 const router = express.Router()
 
 const handler = async (req: Request, res: Response) => {
-    const tickets = await Ticket.find({})
+    const tickets = await Ticket.find({
+        orderId: undefined,
+    })
     res.send(tickets)
 }
 

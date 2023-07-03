@@ -9,4 +9,14 @@
     background-color: var(--near-background-color);
     color: var(--text-color);
 
+
+    .page-wrapper {
+        display: grid;
+        grid-template-columns: minmax(var(--large-gap), 1fr) minmax(0, 1000px) minmax(var(--large-gap), 1fr);
+        padding-top: var(--large-gap);
+
+        &>* {
+            grid-column: 2;
+        }
+    }
 }

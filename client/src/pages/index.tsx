@@ -1,30 +1,28 @@
-import { User } from "../common/types/user.type";
-import buildClient from "../api/build-client";
-import useTranslation from "../common/hooks/useTranslation";
+import { User } from '../common/types/user.type'
+import useTranslation from '../common/hooks/useTranslation'
+import { PageProps } from '../common/types/page-props.type'
+import { Ticket } from '../common/types/ticket.type'
+import TicketList from '../features/tickets/components/TicketList'
 
 type PrivateProps = {
-  currentUser: User | null;
-};
-function Home({ currentUser }: PrivateProps) {
-  const t = useTranslation();
+    tickets: Ticket[]
+} & PageProps
 
-  return (
-    <div>
-      <h1>{currentUser ? t("global.welcome") : t("global.notSignedIn")}</h1>
-    </div>
-  );
+function Home({ currentUser, tickets }: PrivateProps) {
+    const t = useTranslation()
+
+    if (!currentUser) return <h1>{t('global.notSignedIn')}</h1>
+    return (
+        <div>
+            <h1>{t('tickets.title')}</h1>
+            <TicketList tickets={tickets} />
+        </div>
+    )
 }
 
-Home.getInitialProps = async (context) => {
-  try {
-    const client = buildClient(context);
-    const { data } = await client.get("/api/users/current_user");
-    return data as PrivateProps;
-  } catch {
-    return {
-      currentUser: null,
-    } as PrivateProps;
-  }
-};
+Home.getInitialProps = async (context, client, currentUser) => {
+    const { data } = await client.get('/api/tickets')
+    return { tickets: data }
+}
 
-export default Home;
+export default Home

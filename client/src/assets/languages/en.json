@@ -1,15 +1,31 @@
 {
-  "global": {
-    "error": "Error",
-    "welcome": "Welcome",
-    "notSignedIn": "You are not signed in"
-  },
-  "auth": {
-    "emailPlaceholder": "Email Address",
-    "passwordPlaceholder": "Password",
-    "submit": "Submit",
-    "signin": "Sign In",
-    "signup": "Sign Up",
-    "signout": "Sign Out"
-  }
+    "global": {
+        "error": "Error",
+        "welcome": "Welcome",
+        "notSignedIn": "You are not signed in"
+    },
+    "auth": {
+        "emailPlaceholder": "Email Address",
+        "passwordPlaceholder": "Password",
+        "submit": "Submit",
+        "signin": "Sign In",
+        "signup": "Sign Up",
+        "signout": "Sign Out"
+    },
+    "tickets": {
+        "titlePlaceholder": "Title",
+        "pricePlaceholder": "Price",
+        "submit": "Submit",
+        "createTicketFormTitle": "Create Ticket",
+        "title": "Tickets",
+        "viewTicket": "View Ticket",
+        "price": "Price",
+        "sell": "Sell Ticket"
+    },
+    "orders": {
+        "timeLeft": "Time Left to Pay",
+        "seconds": "seconds",
+        "expired": "Order Expired",
+        "my": "My Orders"
+    }
 }

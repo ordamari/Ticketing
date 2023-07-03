@@ -1,37 +1,39 @@
-import Link from "next/link";
-import { User } from "../../types/user.type";
-import useTranslation from "../../hooks/useTranslation";
-import { useMemo } from "react";
+import Link from 'next/link'
+import { User } from '../../types/user.type'
+import useTranslation from '../../hooks/useTranslation'
+import { useMemo } from 'react'
 
 type PrivateProps = {
-  currentUser: User | null;
-};
+    currentUser: User | null
+}
 
 function Navbar({ currentUser }: PrivateProps) {
-  const t = useTranslation();
+    const t = useTranslation()
 
-  const links = useMemo(() => {
-    return [
-      !currentUser && { label: t("auth.signin"), href: "/auth/signin" },
-      !currentUser && { label: t("auth.signup"), href: "/auth/signup" },
-      currentUser && { label: t("auth.signout"), href: "/auth/signout" },
-    ].filter(Boolean);
-  }, [t, currentUser]);
+    const links = useMemo(() => {
+        return [
+            !currentUser && { label: t('auth.signin'), href: '/auth/signin' },
+            !currentUser && { label: t('auth.signup'), href: '/auth/signup' },
+            currentUser && { label: t('tickets.sell'), href: '/tickets/new' },
+            currentUser && { label: t('orders.my'), href: '/orders' },
+            currentUser && { label: t('auth.signout'), href: '/auth/signout' },
+        ].filter(Boolean)
+    }, [t, currentUser])
 
-  return (
-    <nav className="navbar flex justify-space-between bg-primary navbar">
-      <Link className="logo" href="/">
-        GitTix
-      </Link>
+    return (
+        <nav className="navbar flex justify-space-between bg-primary navbar">
+            <Link className="logo" href="/">
+                GitTix
+            </Link>
 
-      <ul className="flex gap-small">
-        {links.map(({ label, href }) => (
-          <li key={href}>
-            <Link href={href}>{label}</Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  );
+            <ul className="flex gap-small">
+                {links.map(({ label, href }) => (
+                    <li key={href}>
+                        <Link href={href}>{label}</Link>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+    )
 }
-export default Navbar;
+export default Navbar
